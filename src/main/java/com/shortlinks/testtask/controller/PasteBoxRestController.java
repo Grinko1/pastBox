@@ -16,7 +16,7 @@ public class PasteBoxRestController {
     private final PastBoxService pastService;
     @GetMapping
     public List<PastBoxResponse> getLatestPasts(){
-        return pastService.getLatestPasts(10);
+        return pastService.getLatestPasts();
     }
 
     @GetMapping("/{hash}")

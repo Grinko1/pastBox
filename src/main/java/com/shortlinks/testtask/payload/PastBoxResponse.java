@@ -9,5 +9,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PastBoxResponse {
     private String data;
-    private boolean isPublic;
 }

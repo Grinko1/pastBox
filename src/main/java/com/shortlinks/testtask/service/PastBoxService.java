@@ -9,7 +9,7 @@ import java.util.List;
 public interface PastBoxService {
 
     PastBoxResponse getByHash(String hash);
-    List<PastBoxResponse> getLatestPasts(int amount);
+    List<PastBoxResponse> getLatestPasts();
     PastBoxUrlResponse save(PastBoxRequest payload);
 
 

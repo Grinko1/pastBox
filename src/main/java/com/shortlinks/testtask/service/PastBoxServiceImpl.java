@@ -29,29 +29,25 @@ public class PastBoxServiceImpl implements PastBoxService {
     @Override
     public PastBoxResponse getByHash(String hash) {
         PastBoxEntity byHash = repository.findByHash(hash);
-        return new PastBoxResponse(byHash.getData(), byHash.isPublic());
+        return new PastBoxResponse(byHash.getData());
     }
 
     @Override
-    public List<PastBoxResponse> getLatestPasts(int amount) {
+    public List<PastBoxResponse> getLatestPasts() {
         return repository.findAllByStatusAndALive(10).stream()
-                .map(i -> new PastBoxResponse(i.getData(), i.isPublic())).collect(Collectors.toList());
+                .map(i -> new PastBoxResponse(i.getData())).collect(Collectors.toList());
 
     }
 
     @Override
     public PastBoxUrlResponse save(PastBoxRequest payload) {
-        int hash = generateId();
-        PastBoxEntity entity = new PastBoxEntity();
-        entity.setData(payload.getData());
-        entity.setId(hash);
-        entity.setPublic(payload.getStatus() == PublicStatus.PUBLIC);
-        entity.setHash(Integer.toHexString(hash));
-        entity.setLifetime(LocalDateTime.now().plusSeconds(payload.getExpirationTimeSeconds()));
-        System.out.println(entity  + "  " + entity.hashCode());
-        System.out.println(hash);
+        int id = generateId();
+
+        PastBoxEntity entity = new PastBoxEntity(id, payload.getData(),
+                LocalDateTime.now().plusSeconds(payload.getExpirationTimeSeconds()),
+                        payload.getStatus());
         repository.save(entity);
-        return new PastBoxUrlResponse(host + "/" + entity.getHash());
+        return new PastBoxUrlResponse(host + "/" + entity.getUuid());
     }
 
     private int generateId() {
