@@ -1,4 +1,4 @@
-package com.shortlinks.testtask.controller;
+package com.shortlinks.testtask.service;
 
 import com.shortlinks.testtask.payload.PastBoxResponse;
 import com.shortlinks.testtask.payload.PastBoxUrlResponse;

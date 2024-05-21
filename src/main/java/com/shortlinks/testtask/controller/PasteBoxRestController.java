@@ -2,36 +2,30 @@ package com.shortlinks.testtask.controller;
 
 
 import com.shortlinks.testtask.payload.PastBoxRequest;
-import com.shortlinks.testtask.service.PastBoxServiceImpl;
+import com.shortlinks.testtask.payload.PastBoxResponse;
+import com.shortlinks.testtask.payload.PastBoxUrlResponse;
+import com.shortlinks.testtask.service.PastBoxService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/")
 public class PasteBoxRestController {
-    private final PastBoxServiceImpl pastService;
+    private final PastBoxService pastService;
     @GetMapping
-    public List<String> getLatestPasts(){
-        List<String> response = new ArrayList<>();
-        response.add("First past");
-        response.add("Second past");
-        response.add("Third past");
-        response.add("Four past");
-        return response;
+    public List<PastBoxResponse> getLatestPasts(){
+        return pastService.getLatestPasts(10);
     }
 
     @GetMapping("/{hash}")
-    public String getByHash(@PathVariable("hash") String hash){
-//        service.findByHash(hash)
-        return hash;
+    public PastBoxResponse getByHash(@PathVariable("hash") String hash){
+    return pastService.getByHash(hash);
+
     }
     @PostMapping
-    public String createNewPast(@RequestBody PastBoxRequest payload){
-        //return dto with past, generated link and expiration time
-        return payload.getData();
+    public PastBoxUrlResponse createNewPast(@RequestBody PastBoxRequest payload){
+        return pastService.save(payload);
     }
 }

@@ -40,6 +40,8 @@ public class InMemoryPastBoxRepository implements PastBoxRepository {
     public String save(PastBoxEntity pastBox) {
         String hash =pastBox.getHash();
          pastBoxList.put(hash, pastBox);
+        System.out.println(pastBoxList);
+        System.out.println(hash +" get hash from created object");
         return hash;
     }
 }
